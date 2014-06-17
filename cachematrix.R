@@ -1,4 +1,11 @@
 makeCacheMatrix <- function(x = matrix()) {
+#
+# This function vectorizes 4 function as follows
+# set - initialize special vector
+# get - get input variable
+# setinv - evaluate inverse matrix
+# getinv - get inverse matrix from cache
+# 
         m <- NULL
         set <- function(y) {
                 x <<- y
@@ -12,15 +19,20 @@ makeCacheMatrix <- function(x = matrix()) {
              getinv = getinv)
 }
 cacheSolve <- function(x, ...) {
+#
+# The function cacheSolve(x...) evaluate inverse matrix of x and returns it.
+# If the inverted matrix is already evaluated returns the cache matrix
+#  
         m <- x$getinv()
         if(!is.null(m)) {
-                message("getting cached inverse matrix")
+                message("getting cached inverse matrix") #is already in the cache
                 return(m)
         }
         data <- x$get()
-        m <- solve(data, ...)
-        x$setinv(m)
-        m
+
+        m <- solve(data, ...) # evaluate inverse of data and put on m
+        x$setinv(m) #set m in the cache
+        m # returns m
 }
 #
 #
